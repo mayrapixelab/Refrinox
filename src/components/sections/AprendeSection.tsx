@@ -1,6 +1,7 @@
 "use client";
 import { useRef } from "react";
-import { motion, useInView, useScroll, useTransform, MotionValue } from "motion/react";
+import { motion, useInView, useScroll, useTransform } from "motion/react";
+import type { MotionValue } from "motion/react";
 import { PlayCircle, BookOpen, BarChart2, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { ScrollGradient } from "@/components/ui/scroll-gradient";
@@ -56,13 +57,11 @@ function AprendeCard({
   const n = RECURSOS.length;
   const Icon = recurso.icon;
 
-  // This card enters at (index/n) of scroll and the next card comes in at ((index+1)/n)
   const start = index / n;
   const end = (index + 1) / n;
 
-  // Scale & translateY this card slightly as the next one slides over it
-  const scale = useTransform(scrollYProgress, [start, end], [1, 0.94]);
-  const opacity = useTransform(scrollYProgress, [start, Math.min(end, 0.99)], [1, 0.7]);
+  // Solo escala ligeramente al quedar debajo — sin cambio de opacidad
+  const scale = useTransform(scrollYProgress, [start, end], [1, 0.96]);
 
   // Offset so cards stack slightly peeking: each card is pushed down by CARD_OFFSET * index
   const topOffset = index * CARD_OFFSET;
@@ -71,7 +70,6 @@ function AprendeCard({
     <motion.div
       style={{
         scale,
-        opacity,
         top: topOffset,
         position: "sticky",
         zIndex: index + 1,

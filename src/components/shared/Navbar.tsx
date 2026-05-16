@@ -40,10 +40,10 @@ export function Navbar() {
             : "bg-white/95 backdrop-blur-md border-b border-[oklch(90%_0.02_228)] shadow-[0_1px_12px_oklch(12%_0.07_228/0.06)]"
         )}
       >
-        <nav className="max-w-7xl mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
+        <nav className="max-w-7xl mx-auto px-6 md:px-10 h-20 flex items-center justify-between">
           {/* Logo */}
           <a href="/" className="flex items-center gap-2 group shrink-0">
-            <div className="relative h-16 w-64">
+            <div className="relative h-20 w-72">
               {/* Colored logo for light bg */}
               <Image
                 src="/images/logo-refrinox.png"
@@ -71,7 +71,7 @@ export function Navbar() {
           </a>
 
           {/* Links desktop */}
-          <ul className="hidden lg:flex items-center gap-7">
+          <ul className="hidden lg:flex items-center gap-1">
             {NAV_LINKS.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -79,21 +79,17 @@ export function Navbar() {
                   <a
                     href={link.href}
                     className={cn(
-                      "relative text-sm font-medium transition-colors duration-200 font-[family-name:var(--font-body)] group/link pb-0.5",
+                      "relative px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 font-[family-name:var(--font-body)]",
                       isDark
-                        ? "text-white/80 hover:text-white"
-                        : "text-[oklch(38%_0.05_228)] hover:text-[oklch(41%_0.12_228)]",
-                      isActive && !isDark && "text-[oklch(41%_0.12_228)] font-semibold"
+                        ? isActive
+                          ? "bg-white/20 text-white"
+                          : "text-white/75 hover:bg-white/15 hover:text-white"
+                        : isActive
+                          ? "bg-[oklch(41%_0.12_228)] text-white"
+                          : "text-[oklch(40%_0.05_228)] hover:bg-[oklch(41%_0.12_228/0.10)] hover:text-[oklch(25%_0.14_228)]"
                     )}
                   >
                     {link.label}
-                    <span
-                      className={cn(
-                        "absolute bottom-0 left-0 h-px transition-all duration-300 ease-out",
-                        isDark ? "bg-white/70" : "bg-[oklch(41%_0.12_228)]",
-                        isActive ? "w-full" : "w-0 group-hover/link:w-full"
-                      )}
-                    />
                   </a>
                 </li>
               );
