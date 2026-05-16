@@ -1,0 +1,75 @@
+@import "tailwindcss";
+@import "../styles/design-system/tokens.css";
+@import "../styles/design-system/animations.css";
+@import "../styles/theme.css";
+
+@layer base {
+  :root {
+    /* Scroll gradient — cambia via JS (IntersectionObserver) */
+    --scroll-bg: oklch(99% 0.005 228);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--scroll-bg);
+    color: var(--fg-primary, oklch(12% 0.07 228));
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    /* Transición suave al cambiar el fondo con scroll */
+    transition: background-color 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    /* 75% = Condensed, equivalente al eje wdth 75 del variable font */
+    font-stretch: 75%;
+    letter-spacing: -0.02em;
+  }
+
+  @keyframes aurora {
+    0%   { background-position: 50% 50%, 50% 50%; }
+    100% { background-position: 350% 50%, 350% 50%; }
+  }
+
+  @keyframes moveHorizontal {
+    0%   { transform: translateX(-50%) translateY(-10%); }
+    50%  { transform: translateX(50%)  translateY(10%);  }
+    100% { transform: translateX(-50%) translateY(-10%); }
+  }
+
+  @keyframes moveInCircle {
+    0%   { transform: rotate(0deg);   }
+    50%  { transform: rotate(180deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes moveVertical {
+    0%   { transform: translateY(-50%); }
+    50%  { transform: translateY(50%);  }
+    100% { transform: translateY(-50%); }
+  }
+}
+
+@layer utilities {
+  .animate-aurora {
+    animation: aurora 30s linear infinite;
+  }
+
+  .animate-first   { animation: moveVertical   30s ease    infinite; }
+  .animate-second  { animation: moveInCircle   20s reverse infinite; }
+  .animate-third   { animation: moveInCircle   40s linear  infinite; }
+  .animate-fourth  { animation: moveHorizontal 40s ease    infinite; }
+  .animate-fifth   { animation: moveInCircle   20s ease    infinite; }
+
+  /* Sección con scroll-gradient trigger */
+  .section-dark     { --section-bg: oklch(10% 0.07 228); }
+  .section-steel    { --section-bg: oklch(14% 0.07 228); }
+  .section-deep     { --section-bg: oklch(8%  0.05 235); }
+  .section-midnight { --section-bg: oklch(6%  0.04 235); }
+  .section-ice      { --section-bg: oklch(96% 0.008 228); }
+}

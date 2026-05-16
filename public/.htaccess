@@ -1,0 +1,6 @@
+# Fix MIME types para Hostinger Apache
+# Ref: vault/aprendizajes/hostinger-apache-mime-avif-webm.md
+AddType image/avif .avif
+AddType image/webp .webp
+AddType video/webm .webm
+AddType video/mp4  .mp4

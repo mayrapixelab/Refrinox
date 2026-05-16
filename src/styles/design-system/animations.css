@@ -1,0 +1,312 @@
+/* ============================================================
+   Pixelab Design System — Catálogo de animaciones
+   Solo transform/opacity. Easings custom. Respeta reduced-motion.
+   Para activar las que dependen de scroll, añade `is-inview`
+   con IntersectionObserver desde JS (Motion / Framer / vanilla).
+   ============================================================ */
+
+@layer utilities {
+
+  /* ----------------------------------------------------------
+     1) Fade + slide (la base del catálogo)
+        Estado por defecto: oculto. Animan al entrar al viewport.
+     ---------------------------------------------------------- */
+
+  .anim-fade {
+    opacity: 0;
+    transition: opacity var(--dur-medium) var(--ease-out-quart);
+  }
+  .anim-fade.is-inview { opacity: 1; }
+
+  .anim-fade-up {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+    transition:
+      opacity var(--dur-medium) var(--ease-out-quart),
+      transform var(--dur-medium) var(--ease-out-quart);
+  }
+  .anim-fade-up.is-inview { opacity: 1; transform: translate3d(0, 0, 0); }
+
+  .anim-fade-down {
+    opacity: 0;
+    transform: translate3d(0, -24px, 0);
+    transition:
+      opacity var(--dur-medium) var(--ease-out-quart),
+      transform var(--dur-medium) var(--ease-out-quart);
+  }
+  .anim-fade-down.is-inview { opacity: 1; transform: translate3d(0, 0, 0); }
+
+  .anim-fade-left {
+    opacity: 0;
+    transform: translate3d(-32px, 0, 0);
+    transition:
+      opacity var(--dur-medium) var(--ease-out-quart),
+      transform var(--dur-medium) var(--ease-out-quart);
+  }
+  .anim-fade-left.is-inview { opacity: 1; transform: translate3d(0, 0, 0); }
+
+  .anim-fade-right {
+    opacity: 0;
+    transform: translate3d(32px, 0, 0);
+    transition:
+      opacity var(--dur-medium) var(--ease-out-quart),
+      transform var(--dur-medium) var(--ease-out-quart);
+  }
+  .anim-fade-right.is-inview { opacity: 1; transform: translate3d(0, 0, 0); }
+
+  /* ----------------------------------------------------------
+     2) Scale (entrada nunca desde scale(0))
+     ---------------------------------------------------------- */
+
+  .anim-scale-in {
+    opacity: 0;
+    transform: scale(0.96);
+    transition:
+      opacity var(--dur-medium) var(--ease-out-quart),
+      transform var(--dur-medium) var(--ease-out-quart);
+  }
+  .anim-scale-in.is-inview { opacity: 1; transform: scale(1); }
+
+  .anim-pop {
+    opacity: 0;
+    transform: scale(0.92);
+    transition:
+      opacity var(--dur-base) var(--ease-spring),
+      transform var(--dur-medium) var(--ease-spring);
+  }
+  .anim-pop.is-inview { opacity: 1; transform: scale(1); }
+
+  /* ----------------------------------------------------------
+     3) Reveal con clip-path (mejor que opacity para imágenes)
+     ---------------------------------------------------------- */
+
+  .anim-reveal-up {
+    clip-path: inset(100% 0 0 0);
+    transform: translate3d(0, 32px, 0);
+    transition:
+      clip-path var(--dur-slow) var(--ease-out-quint),
+      transform var(--dur-slow) var(--ease-out-quint);
+  }
+  .anim-reveal-up.is-inview {
+    clip-path: inset(0 0 0 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  .anim-reveal-left {
+    clip-path: inset(0 0 0 100%);
+    transition: clip-path var(--dur-slow) var(--ease-out-quint);
+  }
+  .anim-reveal-left.is-inview { clip-path: inset(0 0 0 0); }
+
+  .anim-reveal-right {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path var(--dur-slow) var(--ease-out-quint);
+  }
+  .anim-reveal-right.is-inview { clip-path: inset(0 0 0 0); }
+
+  /* Mask reveal vertical (texto): wrapper con overflow:hidden + child */
+  .anim-mask-text {
+    display: inline-block;
+    overflow: hidden;
+    line-height: 1.1;
+  }
+  .anim-mask-text > * {
+    display: inline-block;
+    transform: translate3d(0, 105%, 0);
+    transition: transform var(--dur-slow) var(--ease-out-quint);
+  }
+  .anim-mask-text.is-inview > * { transform: translate3d(0, 0, 0); }
+
+  /* ----------------------------------------------------------
+     4) Stagger — delay incremental por hijo
+        Usa con .anim-stagger en el contenedor + .anim-fade-up
+        en cada hijo.
+     ---------------------------------------------------------- */
+
+  .anim-stagger > .is-inview { transition-delay: 0ms; }
+  .anim-stagger > *:nth-child(1).is-inview { transition-delay:   0ms; }
+  .anim-stagger > *:nth-child(2).is-inview { transition-delay:  60ms; }
+  .anim-stagger > *:nth-child(3).is-inview { transition-delay: 120ms; }
+  .anim-stagger > *:nth-child(4).is-inview { transition-delay: 180ms; }
+  .anim-stagger > *:nth-child(5).is-inview { transition-delay: 240ms; }
+  .anim-stagger > *:nth-child(6).is-inview { transition-delay: 300ms; }
+  .anim-stagger > *:nth-child(7).is-inview { transition-delay: 360ms; }
+  .anim-stagger > *:nth-child(8).is-inview { transition-delay: 420ms; }
+  .anim-stagger > *:nth-child(9).is-inview { transition-delay: 480ms; }
+  .anim-stagger > *:nth-child(10).is-inview { transition-delay: 540ms; }
+
+  /* ----------------------------------------------------------
+     5) Parallax sutil (velocidad controlada por --parallax-y)
+        El padre debe tener `transform: translateZ(0)` y
+        actualizar --parallax-y en scroll (Motion useScroll).
+     ---------------------------------------------------------- */
+
+  .anim-parallax {
+    will-change: transform;
+    transform: translate3d(0, var(--parallax-y, 0), 0);
+  }
+
+  .anim-parallax-slow  { --parallax-speed: 0.2; }
+  .anim-parallax-base  { --parallax-speed: 0.4; }
+  .anim-parallax-fast  { --parallax-speed: 0.6; }
+
+  /* ----------------------------------------------------------
+     6) Hover micro-interacciones
+        Solo aplican en pointer:fine para no triggerear en touch.
+     ---------------------------------------------------------- */
+
+  @media (hover: hover) and (pointer: fine) {
+    .anim-hover-lift {
+      transition: transform var(--dur-base) var(--ease-out-quart);
+    }
+    .anim-hover-lift:hover { transform: translate3d(0, -4px, 0); }
+
+    .anim-hover-grow {
+      transition: transform var(--dur-base) var(--ease-out-quart);
+    }
+    .anim-hover-grow:hover { transform: scale(1.03); }
+
+    .anim-hover-glow {
+      transition: box-shadow var(--dur-medium) var(--ease-out-quart);
+    }
+    .anim-hover-glow:hover { box-shadow: var(--glow-brand); }
+  }
+
+  /* Press feedback universal en cualquier botón */
+  .anim-press {
+    transition: transform var(--dur-fast) var(--ease-out-quart);
+  }
+  .anim-press:active { transform: scale(0.97); }
+
+  /* ----------------------------------------------------------
+     7) Marquee / loops continuos
+     ---------------------------------------------------------- */
+
+  .anim-marquee {
+    display: flex;
+    overflow: hidden;
+    --marquee-duration: 30s;
+  }
+  .anim-marquee > * {
+    flex-shrink: 0;
+    animation: marquee var(--marquee-duration) linear infinite;
+    will-change: transform;
+  }
+  @keyframes marquee {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(-100%, 0, 0); }
+  }
+
+  .anim-marquee-reverse > * { animation-direction: reverse; }
+  .anim-marquee-pause:hover > * { animation-play-state: paused; }
+
+  /* ----------------------------------------------------------
+     8) Skeleton / loading shimmer
+     ---------------------------------------------------------- */
+
+  .anim-shimmer {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-muted);
+  }
+  .anim-shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      oklch(100% 0 0 / 0.08),
+      transparent
+    );
+    transform: translate3d(-100%, 0, 0);
+    animation: shimmer 1.6s var(--ease-in-out-quart) infinite;
+  }
+  @keyframes shimmer {
+    100% { transform: translate3d(100%, 0, 0); }
+  }
+
+  /* ----------------------------------------------------------
+     9) Spinner discreto
+     ---------------------------------------------------------- */
+
+  .anim-spin {
+    animation: spin 0.6s linear infinite;
+    transform-origin: 50% 50%;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* ----------------------------------------------------------
+     10) Float / ambient (fondos, decoraciones)
+     ---------------------------------------------------------- */
+
+  .anim-float {
+    animation: float 6s var(--ease-in-out-quart) infinite;
+    will-change: transform;
+  }
+  @keyframes float {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50%      { transform: translate3d(0, -16px, 0); }
+  }
+
+  /* ----------------------------------------------------------
+     11) @starting-style modernos (sin JS)
+         Para popovers/dropdowns/tooltips
+     ---------------------------------------------------------- */
+
+  .anim-pop-in {
+    opacity: 1;
+    transform: scale(1);
+    transition:
+      opacity var(--dur-base) var(--ease-out-quart),
+      transform var(--dur-base) var(--ease-out-quart);
+    transform-origin: var(--transform-origin, center);
+  }
+  @starting-style {
+    .anim-pop-in {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+  }
+
+  /* ----------------------------------------------------------
+     12) Página: transición global (combinar con view-transitions API)
+     ---------------------------------------------------------- */
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: var(--dur-medium);
+    animation-timing-function: var(--ease-out-quart);
+  }
+
+  /* ----------------------------------------------------------
+     Reduced motion: matar transformaciones, mantener fades suaves
+     ---------------------------------------------------------- */
+
+  @media (prefers-reduced-motion: reduce) {
+    .anim-fade,
+    .anim-fade-up,
+    .anim-fade-down,
+    .anim-fade-left,
+    .anim-fade-right,
+    .anim-scale-in,
+    .anim-pop,
+    .anim-reveal-up,
+    .anim-reveal-left,
+    .anim-reveal-right,
+    .anim-mask-text > * {
+      transform: none !important;
+      clip-path: none !important;
+      transition-duration: var(--dur-fast) !important;
+    }
+    .anim-marquee > *,
+    .anim-shimmer::after,
+    .anim-spin,
+    .anim-float {
+      animation: none !important;
+    }
+    .anim-parallax { transform: none !important; }
+  }
+}

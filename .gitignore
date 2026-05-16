@@ -1,0 +1,41 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# next.js
+.next/
+out/
+build/
+
+# env files — NUNCA commitear
+.env
+.env.local
+.env.*.local
+.mcp.json
+.mcp.local.json
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# misc
+.DS_Store
+*.pem
+Thumbs.db
+
+# screenshots de iteración
+dev-screenshots/
+*.png
+*.jpeg
+*.jpg
+!public/**/*.png
+!public/**/*.jpeg
+!public/**/*.jpg
+!public/**/*.webp
+!public/**/*.avif
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts

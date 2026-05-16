@@ -1,0 +1,32 @@
+/* ============================================================
+   Refrinox — Override de tokens de marca
+   Industria del helado · Azul acerado mexicano
+   ============================================================ */
+
+:root {
+  /* Hue: 228 = azul acerado frío (steel blue) */
+  --brand-h: 228;
+  --brand-c: 0.14;
+
+  /* Acento cálido mexicano — del bordado de la mascota */
+  --accent-h: 24;
+  --accent-c: 0.19;
+
+  /* Colores de marca directos */
+  --brand-primary:   oklch(41% 0.12 228);   /* azul Refrinox del logo */
+  --brand-dark:      oklch(24% 0.08 228);   /* azul oscuro navy */
+  --brand-light:     oklch(72% 0.08 228);   /* azul claro/hielo */
+  --brand-accent:    oklch(63% 0.19 24);    /* naranja bordado mascota */
+  --brand-ice:       oklch(97% 0.008 228);  /* blanco gélido */
+
+  /* Tipografía */
+  --font-display: "Barlow Condensed", "Space Grotesk", system-ui, sans-serif;
+  --font-body:    "Inter", "DM Sans", system-ui, sans-serif;
+
+  /* Aurora — colores para el efecto de fondo */
+  --aurora-1: oklch(41% 0.12 228);   /* azul Refrinox */
+  --aurora-2: oklch(55% 0.10 245);   /* azul índigo frío */
+  --aurora-3: oklch(65% 0.08 200);   /* azul cielo gélido */
+  --aurora-4: oklch(72% 0.06 215);   /* celeste hielo */
+  --aurora-5: oklch(30% 0.09 235);   /* azul profundo */
+}
